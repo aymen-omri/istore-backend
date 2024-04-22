@@ -2,6 +2,7 @@ package com.istore.istoreproject.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,7 +40,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(name = "product_description" , length = 1000000000)
+    @Column(name = "product_description" , columnDefinition = "LONGTEXT")
     private String description;
 
     @ManyToOne
@@ -69,6 +70,6 @@ public class Product {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product" , fetch = FetchType.EAGER)
     private List<Image> images;
 }

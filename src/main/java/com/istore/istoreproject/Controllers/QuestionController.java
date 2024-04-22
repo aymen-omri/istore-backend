@@ -43,7 +43,7 @@ public class QuestionController {
     public ResponseEntity<?> deleteQuestion(@PathVariable long id) {
         try {
             questionService.deleteQuestion(id);
-            return ResponseEntity.ok("Question deleted successfully");
+            return ResponseEntity.ok(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to delete question: " + e.getMessage());

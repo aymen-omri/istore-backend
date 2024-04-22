@@ -105,32 +105,22 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(long id) {
         Product product = productRepo.findById(id)
                 .orElseThrow(() -> new NoResultException("Product not found with id: " + id));
-        // Delete images
         imageRepo.deleteAll(product.getImages());
-        productRepo.delete(product);
+        product.getConnectivityOptions().clear();
+        productRepo.deleteById(product.getProduct_id());
 
-        // Delete associated CPU if not null
         if (product.getCpu() != null) {
             cpuService.deleteCPUById(product.getCpu().getCpu_id());
-            product.setCpu(null);
         }
 
-        // Delete associated camera if not null
         if (product.getCamera() != null) {
             cameraService.deleteCamera(product.getCamera().getCamera_id());
-            product.setCamera(null);
         }
 
-        // Delete associated screen if not null
         if (product.getScreen() != null) {
             screenService.deleteScreenById(product.getScreen().getScreen_id());
-            product.setScreen(null);
         }
 
-        // Clear connectivity options (assuming it's a collection)
-        product.getConnectivityOptions().clear();
-
-        // Delete product
     }
 
 }

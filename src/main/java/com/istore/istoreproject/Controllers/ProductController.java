@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.istore.istoreproject.Requests.ProductRequest;
 import com.istore.istoreproject.Services.ProductService;
 import com.istore.istoreproject.models.Product;
 
@@ -19,9 +20,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveProduct(@RequestBody Product product, @RequestParam List<Long> connectivityIds) {
+    public ResponseEntity<?> saveProduct(@RequestBody ProductRequest productRequest) {
         try {
-            Product savedProduct = productService.saveProduct(product, connectivityIds);
+            Product savedProduct = productService.saveProduct(productRequest);
             return ResponseEntity.ok(savedProduct);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -30,7 +31,7 @@ public class ProductController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateProduct(@RequestBody Product updatedProduct, @PathVariable("id") long id) {
+    public ResponseEntity<?> updateProduct(@RequestBody ProductRequest updatedProduct, @PathVariable("id") long id) {
         try {
             Product updated = productService.updateProduct(updatedProduct, id);
             return ResponseEntity.ok(updated);
@@ -59,6 +60,27 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to retrieve products: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/question/{id}")
+    public ResponseEntity<?> getAllProductsByQuestionId(@PathVariable long id) {
+        try {
+            List<Product> products = productService.getByQuestion(id);
+            return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to retrieve products: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable long id) {
+        try {
+            productService.deleteProduct(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

@@ -20,7 +20,7 @@ public class CPU {
     private long cpu_id;
 
     @Column(name = "cpu_model")
-    private long model;
+    private String model;
 
     private String speed;
 

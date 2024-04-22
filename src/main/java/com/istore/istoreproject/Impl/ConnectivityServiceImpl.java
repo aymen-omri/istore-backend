@@ -3,6 +3,7 @@ package com.istore.istoreproject.Impl;
 import org.springframework.stereotype.Service;
 
 import com.istore.istoreproject.Services.ConnectivityService;
+import java.util.List;
 import com.istore.istoreproject.models.Connectivity;
 import com.istore.istoreproject.repositories.ConnectivityRepo;
 
@@ -23,6 +24,11 @@ public class ConnectivityServiceImpl implements ConnectivityService {
     @Override
     public void delete(long id) {
         connectivityRepo.deleteById(id);
+    }
+
+    @Override
+    public List<Connectivity> getAll() {
+        return connectivityRepo.findAll();
     }
 
 }

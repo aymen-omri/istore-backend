@@ -55,15 +55,17 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/api/v1/user/all",
                                         "/api/v1/user/enable-disable/**",
-                                        "/api/v1/illustration/delete/**")
+                                        "/api/products/all",
+                                        "/questions/all")
                                 .hasAuthority("SCOPE_ROLE_ADMIN")
                                 .requestMatchers(
                                         "/api/v1/user/auth/**",
-                                        "/api/v1/illustration/all",
-                                        "/content/**",
-                                        "/api/v1/illustration/by-id/**")
+                                        "/questions/parents",
+                                        "/questions/no-children",
+                                        "/api/products/{id}",
+                                        "/api/products/question/{id}",
+                                        "/questions/children/{id}")
                                 .permitAll()
-
                                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(customAuthenticationEntryPoint))

@@ -20,7 +20,7 @@ public class MailService {
         Properties properties = System.getProperties();
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.user", "");
+        properties.put("mail.smtp.user", "aymenomri14.03@gmail.com");
         properties.put("mail.smtp.password", "spdnfmyfguxtwlnv");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
@@ -34,7 +34,7 @@ public class MailService {
         message.setText(body);
 
         Transport transport = session.getTransport("smtp");
-        transport.connect("smtp.gmail.com", "", "spdnfmyfguxtwlnv");
+        transport.connect("smtp.gmail.com", "aymenomri14.03@gmail.com", "spdnfmyfguxtwlnv");
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
     }

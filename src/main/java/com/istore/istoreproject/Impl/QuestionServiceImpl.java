@@ -1,5 +1,7 @@
 package com.istore.istoreproject.Impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.istore.istoreproject.Services.QuestionService;
@@ -10,14 +12,15 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-@SuppressWarnings("null")
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepo questionRepo;
 
+    @SuppressWarnings("null")
     @Override
     public Question addQuestion(Question question) {
         return questionRepo.save(question);
+
     }
 
     @Override
@@ -35,6 +38,28 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question getById(long id) {
         return questionRepo.findById(id).orElseThrow();
+    }
+
+    @Override
+    public List<Question> findAll() {
+        return this.questionRepo.findAll();
+    }
+
+    @Override
+    public List<Question> findQuestionsWithNoChildren() {
+        return questionRepo.findAll().stream()
+                .filter(quest -> questionRepo.findQuestionChildren(quest.getQuestion_id()).isEmpty()).toList();
+    }
+
+    @Override
+    public List<Question> findQuestionChildren(long id) {
+        return questionRepo.findQuestionChildren(id);
+    }
+
+    @Override
+    public List<Question> findParents() {
+        return questionRepo.findAll().stream().filter(quest -> quest.getParentQuestion() == null).toList();
+
     }
 
 }

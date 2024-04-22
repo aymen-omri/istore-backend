@@ -2,19 +2,14 @@ package com.istore.istoreproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
 
 @SpringBootApplication
-public class IstoreProjectApplication extends SpringBootServletInitializer {
+public class IstoreProjectApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(IstoreProjectApplication.class, args);
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(IstoreProjectApplication.class);
-	}
-
 }
+

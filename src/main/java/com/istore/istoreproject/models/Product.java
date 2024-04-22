@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class Product {
     private long product_id;
 
     @Column(name = "product_name")
-    private long name;
+    private String name;
 
     private BigDecimal price;
 
@@ -32,13 +33,13 @@ public class Product {
 
     private int quantity;
 
-    private String refernece;
+    private String reference;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(name = "product_description")
+    @Column(name = "product_description" , length = 1000000000)
     private String description;
 
     @ManyToOne
@@ -50,6 +51,8 @@ public class Product {
     private String batteryCapacity;
 
     private String operatingSystem;
+
+    private String buyLink;
 
     @ManyToOne
     @JoinColumn(name = "screen_id")
@@ -65,4 +68,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
+
+    @OneToMany(mappedBy = "product")
+    private List<Image> images;
 }

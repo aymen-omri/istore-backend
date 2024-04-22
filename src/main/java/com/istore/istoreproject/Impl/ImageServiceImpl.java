@@ -1,13 +1,13 @@
 package com.istore.istoreproject.Impl;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.istore.istoreproject.Services.ImageService;
-import com.istore.istoreproject.Utils.UploadService;
 import com.istore.istoreproject.models.Image;
 import com.istore.istoreproject.models.Product;
 import com.istore.istoreproject.repositories.ImageRepo;
@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class ImageServiceImpl implements ImageService {
 
     private final ImageRepo imageRepo;
-    private final UploadService uploadService;
     private final ProductRepo productRepo;
 
     @Override
@@ -28,9 +27,9 @@ public class ImageServiceImpl implements ImageService {
         Product product = productRepo.findById(product_id).orElseThrow();
         images.forEach(img -> {
             try {
-                String url = uploadService.saveFile(img);
                 Image image = new Image();
-                image.setUrl(url);
+                image.setUrl("data:" + img.getContentType() + ";base64,"
+                        + Base64.getEncoder().encodeToString(img.getBytes()));
                 image.setType(img.getContentType());
                 image.setProduct(product);
                 imageRepo.save(image);
@@ -45,9 +44,9 @@ public class ImageServiceImpl implements ImageService {
     public void addImage(MultipartFile image, long productId) {
         Product product = productRepo.findById(productId).orElseThrow();
         try {
-            String url = uploadService.saveFile(image);
             Image newImage = new Image();
-            newImage.setUrl(url);
+            newImage.setUrl("data:" + image.getContentType() + ";base64,"
+                    + Base64.getEncoder().encodeToString(image.getBytes()));
             newImage.setType(image.getContentType());
             newImage.setProduct(product);
             imageRepo.save(newImage);

@@ -56,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
         product.setRam(productRequest.getRam());
         product.setBatteryCapacity(productRequest.getBatteryCapacity());
         product.setOperatingSystem(productRequest.getOperatingSystem());
+        product.setStorage(productRequest.getStorage());
         product.setConnectivityOptions(connectivities);
         return productRepo.save(product);
     }
@@ -81,6 +82,8 @@ public class ProductServiceImpl implements ProductService {
         product.setReference(productRequest.getReference());
         product.setDescription(productRequest.getDescription());
         product.setRam(productRequest.getRam());
+        product.setStorage(productRequest.getStorage());
+
         product.setBatteryCapacity(productRequest.getBatteryCapacity());
         product.setOperatingSystem(productRequest.getOperatingSystem());
         return productRepo.save(product);

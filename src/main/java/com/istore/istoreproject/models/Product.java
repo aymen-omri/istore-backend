@@ -55,6 +55,8 @@ public class Product {
 
     private String buyLink;
 
+    private int storage;
+
     @ManyToOne
     @JoinColumn(name = "screen_id")
     private Screen screen;

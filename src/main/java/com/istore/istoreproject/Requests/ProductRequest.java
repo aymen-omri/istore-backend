@@ -31,5 +31,6 @@ public class ProductRequest {
     private CPU cpu;
     private Screen screen ;
     private Camera camera;
+    private int storage;
     
 }
